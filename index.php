@@ -28,7 +28,7 @@
           <li><a href="https://orcid.org" target="_blank">About ORCID</a></li>
           <li><a href="https://orcid.org/help/contact-us" target="_blank">Contact ORCID</a></li>
         </ul>
-        <h3 class="muted">ORCID @ State University</h3>
+        <h3 class="muted">ORCID @ eBlocBroker</h3>
       </div>
 
       <hr>
@@ -43,39 +43,7 @@
         <!--replace client_id and redirect_uri with your own values-->
         <p class="lead">Already have an ORCID iD? <a href="https://orcid.org/oauth/authorize?client_id=APP-XXXXXXXXXXXXXXXX&response_type=code&scope=/authenticate&redirect_uri=https://your-redirect-uri.org&show_login=true">Connect your existing ORCID iD</a>
       </div>
-
       <hr>
-
-     <!-- <div class="row-fluid marketing">
-        <div class="span6">
-          <h4>Subheading</h4>
-          <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
-
-          <h4>Subheading</h4>
-          <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
-
-          <h4>Subheading</h4>
-          <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-        </div>
-
-        <div class="span6">
-          <h4>Subheading</h4>
-          <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
-
-          <h4>Subheading</h4>
-          <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
-
-          <h4>Subheading</h4>
-          <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-        </div>
-      </div>
-
-      <hr>-->
-
-      <div class="footer">
-        Want to build your own create-on-demand app? <a href="https://github.com/ORCID/orcid-php-demo-app" target="_blank">Get the code</a>
-      </div>
-
     </div> <!-- /container -->
 
     <!-- Javascript
