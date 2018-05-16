@@ -36,7 +36,7 @@
       <div class="jumbotron">
         <h1>Get an ORCID iD!</h1>
         <br>
-        <p class="lead">Click the button below to create an ORCID iD and connect it to State University's faculty profile system.</p>
+        <p class="lead">Click the button below to create an ORCID iD and connect it to eBlocBroker smart contract.</p>
         <!--replace client_id and redirect_uri with your own values-->
         <a class="btn btn-large" href="https://orcid.org/oauth/authorize?client_id=APP-XXXXXXXXXXXXXXXX&response_type=code&scope=/authenticate&show_login=false&redirect_uri=https://your-redirect-uri.org"><img id="orcid-id-logo" src="https://orcid.org/sites/default/files/images/orcid_24x24.png" width='24' height='24' alt="ORCID logo"/> Create a new ORCID iD</a>
         <br> <br>
@@ -44,11 +44,7 @@
         <p class="lead">Already have an ORCID iD? <a href="https://orcid.org/oauth/authorize?client_id=APP-XXXXXXXXXXXXXXXX&response_type=code&scope=/authenticate&redirect_uri=https://your-redirect-uri.org&show_login=true">Connect your existing ORCID iD</a>
       </div>
       <hr>
-    </div> <!-- /container -->
-
-    <!-- Javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
+    </div>
     <script src="bootstrap/js/jquery.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
 
