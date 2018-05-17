@@ -10,114 +10,130 @@
     <link href="style.css" rel="stylesheet">
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
+        <!--[if lt IE 9]>
       <script src="bootstrap/js/html5shiv.js"></script>
-    <![endif]-->
+      <![endif]-->
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="https://orcid.org/sites/default/files/images/orcid_16x16.png" />
+	<!-- Favicon -->
+	<link rel="icon" type="image/png" href="https://orcid.org/sites/default/files/images/orcid_16x16.png" />
   </head>
 
   <body>
 
-<?php
+    <?php
 
 
-/////////////////////////////////////////////////////////////////////////////////
-//ORCID API CREDENTIALS - replace these values with your API credentials
-   
-define('OAUTH_CLIENT_ID',     'APP-XXXXXXXXXXXXXXXX');          //client ID
-define('OAUTH_CLIENT_SECRET', 'XXXXXXXXXXXXXXXXXXXXXX');        //client secret
-define('OAUTH_REDIRECT_URI',  'https://your-redirect-uri.org'); //redirect URI
+       /////////////////////////////////////////////////////////////////////////////////
+       //ORCID API CREDENTIALS - replace these values with your API credentials
 
-//ORCID API ENDPOINTS
-////////////////////////////////////////////////////////////////////////////////
+       define('OAUTH_CLIENT_ID',     'APP-90R3NMFJNN5M4J84');                                                //client ID
+       define('OAUTH_CLIENT_SECRET', '006bd8b5-4a7f-4a70-9850-6ead2afd8c55');                                //client secret
+       define('OAUTH_REDIRECT_URI',  'http://ebloc.cmpe.boun.edu.tr/orcid-php-demo-app/oauth-redirect.php'); //redirect URI
 
-   
-//Sandbox - Member API
-//define('OAUTH_AUTHORIZATION_URL', 'https://sandbox.orcid.org/oauth/authorize');//authorization endpoint
-//define('OAUTH_TOKEN_URL', 'https://sandbox.orcid.org/oauth/token'); //token endpoint
-//define('ENV', 'https://sandbox.orcid.org'); //environment
-
-//Sandbox - Public API
-//define('OAUTH_AUTHORIZATION_URL', 'https://sandbox.orcid.org/oauth/authorize');//authorization endpoint
-//define('OAUTH_TOKEN_URL', 'https://sandbox.orcid.org/oauth/token');//token endpoint
-//define('ENV', 'https://sandbox.orcid.org'); //environment
-
-//Production - Member API
-//define('OAUTH_AUTHORIZATION_URL', 'https://orcid.org/oauth/authorize');//authorization endpoint
-//define('OAUTH_TOKEN_URL', 'https://api.orcid.org/oauth/token'); //token endpoint
-//define('ENV', 'https://orcid.org'); //environment
-
-//Production - Public API
-define('OAUTH_AUTHORIZATION_URL', 'https://orcid.org/oauth/authorize');//authorization endpoint
-define('OAUTH_TOKEN_URL', 'https://orcid.org/oauth/token');//token endpoint
-define('ENV', 'https://orcid.org'); //environment
-
-//EXCHANGE AUTHORIZATION CODE FOR ACCESS TOKEN
-////////////////////////////////////////////////////////////////////////
-
-//If an authorization code exists, fetch the access token
-if (isset($_GET['code'])) {
-
-	//Build request parameter string
-	$params = "client_id=" . OAUTH_CLIENT_ID . "&client_secret=" . OAUTH_CLIENT_SECRET . "&grant_type=authorization_code&code=" . $_GET['code'] . "&redirect_uri=" . OAUTH_REDIRECT_URI;
+       //ORCID API ENDPOINTS
+       ////////////////////////////////////////////////////////////////////////////////
 
 
-	//Initialize cURL session
-	$ch = curl_init();
+       //Sandbox - Member API
+       //define('OAUTH_AUTHORIZATION_URL', 'https://sandbox.orcid.org/oauth/authorize');//authorization endpoint
+       //define('OAUTH_TOKEN_URL', 'https://sandbox.orcid.org/oauth/token'); //token endpoint
+       //define('ENV', 'https://sandbox.orcid.org'); //environment
 
-	//Set cURL options
-	curl_setopt($ch, CURLOPT_URL, OAUTH_TOKEN_URL);
-	curl_setopt($ch, CURLOPT_HTTPHEADER, array('Accept: application/json'));
-	curl_setopt($ch, CURLOPT_POST, true);
-	curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
-	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);//Turn off SSL certificate check for testing - remove this for production version!
-	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);//Turn off SSL certificate check for testing - remove this for production version!
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
+       //Sandbox - Public API
+       //define('OAUTH_AUTHORIZATION_URL', 'https://sandbox.orcid.org/oauth/authorize');//authorization endpoint
+       //define('OAUTH_TOKEN_URL', 'https://sandbox.orcid.org/oauth/token');//token endpoint
+       //define('ENV', 'https://sandbox.orcid.org'); //environment
 
-	//Execute cURL command
-	$result = curl_exec($ch);
+       //Production - Member API
+       //define('OAUTH_AUTHORIZATION_URL', 'https://orcid.org/oauth/authorize');//authorization endpoint
+       //define('OAUTH_TOKEN_URL', 'https://api.orcid.org/oauth/token'); //token endpoint
+       //define('ENV', 'https://orcid.org'); //environment
 
-	//Close cURL session
-	curl_close($ch);
+       //Production - Public API
+       define('OAUTH_AUTHORIZATION_URL', 'https://orcid.org/oauth/authorize');//authorization endpoint
+       define('OAUTH_TOKEN_URL', 'https://orcid.org/oauth/token');//token endpoint
+       define('ENV', 'https://orcid.org'); //environment
 
-	//Transform cURL response from json string to php array
-	$response = json_decode($result, true);
+       //EXCHANGE AUTHORIZATION CODE FOR ACCESS TOKEN
+       ////////////////////////////////////////////////////////////////////////
 
-} else {
-	//If an authorization code doesn't exist, throw an error
-	echo "Unable to connect to ORCID";
-}
+       //If an authorization code exists, fetch the access token
+       if (isset($_GET['code'])) {
+       //Build request parameter string
+       $params = "client_id=" . OAUTH_CLIENT_ID . "&client_secret=" . OAUTH_CLIENT_SECRET . "&grant_type=authorization_code&code=" . $_GET['code'] . "&redirect_uri=" . OAUTH_REDIRECT_URI;
 
-?>		
 
-<div class="container">
+       //Initialize cURL session
+       $ch = curl_init();
+
+       //Set cURL options
+       curl_setopt($ch, CURLOPT_URL, OAUTH_TOKEN_URL);
+       curl_setopt($ch, CURLOPT_HTTPHEADER, array('Accept: application/json'));
+       curl_setopt($ch, CURLOPT_POST, true);
+       curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
+       curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);//Turn off SSL certificate check for testing - remove this for production version!
+       curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);//Turn off SSL certificate check for testing - remove this for production version!
+       curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+       //Execute cURL command
+       $result = curl_exec($ch);
+
+       //Close cURL session
+       curl_close($ch);
+
+       //Transform cURL response from json string to php array
+       $response = json_decode($result, true);
+       $value=$response['orcid'];
+
+       if (!empty($value)) {
+       $doo = shell_exec("echo ". $value ." >  /eBloc/fifo");
+       $doo = shell_exec("echo ". $value ." >> /eBloc/orcid.txt");
+       }
+
+       //$doo = shell_exec("echo ". htmlspecialchars($_GET["code"]) ." >> /eBloc/");
+       // echo '' . htmlspecialchars($_GET["code"]) . '!';
+       //$doo = shell_exec('/eBloc/dene.sh');
+       //$doo = shell_exec('ls /eBloc/');
+       //echo "<pre>$doo</pre>";
+
+       } else {
+       //If an authorization code doesn't exist, throw an error
+       echo "Unable to connect to ORCID";
+       }
+
+       ?>
+
+    <div class="container">
 
       <div class="masthead">
-        <ul class="nav nav-pills pull-right">
-          <li><a href="index.php">Home</a></li>
-          <li><a href="https://orcid.org/about" target="_blank">About ORCID</a></li>
-          <li><a href="https://orcid.org/help/contact-us" target="_blank">Contact ORCID</a></li>
-        </ul>
-        <h3 class="muted">ORCID @ eBlocBroker</h3>
+	<ul class="nav nav-pills pull-right">
+	  <li><a href="index.php">Home</a></li>
+	  <li><a href="https://orcid.org/about" target="_blank">About ORCID</a></li>
+	  <li><a href="https://orcid.org/help/contact-us" target="_blank">Contact ORCID</a></li>
+	</ul>
+	<h3 class="muted">ORCID @ eBlocBroker</h3>
       </div>
 
       <hr>
 
       <div class="jumbotron">
-      <h1>Thanks, <?php echo $response['name']; ?>!</h1>
-      <br>
-      <p class="lead">Your ORCID <img src="https://orcid.org/sites/default/files/images/orcid_16x16.png" class="logo" width='16' height='16' alt="iD"/> is <a href="<?php echo ENV; ?>/<?php echo $response['orcid']; ?>" target="_blank"><?php echo ENV; ?>/<?php echo $response['orcid']; ?></a></p>
+	<h1>Thanks, <?php echo $response['name']; ?>!</h1>
+	<br>
+	<p class="lead">Your ORCID <img src="https://orcid.org/sites/default/files/images/orcid_16x16.png" class="logo" width='16' height='16' alt="iD"/> is <a href="<?php echo ENV; ?>/<?php echo $response['orcid']; ?>" target="_blank"><?php echo ENV; ?>/<?php echo $response['orcid']; ?></a></p>
+	<p class="lead">We received your registiration. </p>
+
+	      <!--
       <p class="lead">The access token we're storing in our database so that we can update your ORCID record in the future is <b><?php echo $response['access_token']; ?></b></p>
       <p>(for demo purposes only - don't show access tokens in live apps!)</p>
       <br> <br>
       <a class="btn btn-large"  href="<?php echo ENV; ?>/my-orcid" target="_blank">Go to your ORCID record</a>
-  </div>
+      --->
 
-<hr>
+      </div>
+
+      <hr>
       <script src="bootstrap/js/jquery.js"></script>
-    <script src="bootstrap/js/bootstrap.min.js"></script>
+      <script src="bootstrap/js/bootstrap.min.js"></script>
 
   </body>
 </html>
