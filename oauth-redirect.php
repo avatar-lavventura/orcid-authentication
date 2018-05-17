@@ -22,16 +22,18 @@
 
 <?php
 
-//ORCID API CREDENTIALS - replace these values with your API credentials
-////////////////////////////////////////////////////////////////////////
 
-define('OAUTH_CLIENT_ID', 'APP-XXXXXXXXXXXXXXXX');//client ID
-define('OAUTH_CLIENT_SECRET', 'XXXXXXXXXXXXXXXXXXXXXX');//client secret
-define('OAUTH_REDIRECT_URI', 'https://your-redirect-uri.org');//redirect URI
+/////////////////////////////////////////////////////////////////////////////////
+//ORCID API CREDENTIALS - replace these values with your API credentials
+   
+define('OAUTH_CLIENT_ID',     'APP-XXXXXXXXXXXXXXXX');          //client ID
+define('OAUTH_CLIENT_SECRET', 'XXXXXXXXXXXXXXXXXXXXXX');        //client secret
+define('OAUTH_REDIRECT_URI',  'https://your-redirect-uri.org'); //redirect URI
 
 //ORCID API ENDPOINTS
-////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
+   
 //Sandbox - Member API
 //define('OAUTH_AUTHORIZATION_URL', 'https://sandbox.orcid.org/oauth/authorize');//authorization endpoint
 //define('OAUTH_TOKEN_URL', 'https://sandbox.orcid.org/oauth/token'); //token endpoint
@@ -70,8 +72,8 @@ if (isset($_GET['code'])) {
 	curl_setopt($ch, CURLOPT_HTTPHEADER, array('Accept: application/json'));
 	curl_setopt($ch, CURLOPT_POST, true);
 	curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
-	curl_setopt ($ch, CURLOPT_SSL_VERIFYHOST, 0);//Turn off SSL certificate check for testing - remove this for production version!
-	curl_setopt ($ch, CURLOPT_SSL_VERIFYPEER, 0);//Turn off SSL certificate check for testing - remove this for production version!
+	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);//Turn off SSL certificate check for testing - remove this for production version!
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);//Turn off SSL certificate check for testing - remove this for production version!
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
 
 	//Execute cURL command
@@ -98,7 +100,7 @@ if (isset($_GET['code'])) {
           <li><a href="https://orcid.org/about" target="_blank">About ORCID</a></li>
           <li><a href="https://orcid.org/help/contact-us" target="_blank">Contact ORCID</a></li>
         </ul>
-        <h3 class="muted">ORCID @ State University</h3>
+        <h3 class="muted">ORCID @ eBlocBroker</h3>
       </div>
 
       <hr>

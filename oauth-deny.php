@@ -29,7 +29,7 @@
           <li><a href="https://orcid.org" target="_blank">About ORCID</a></li>
           <li><a href="https://orcid.org/help/contact-us" target="_blank">Contact ORCID</a></li>
         </ul>
-        <h3 class="muted">ORCID @ State University</h3>
+        <h3 class="muted">ORCID @ eBlocBroker</h3>
       </div>
 
       <hr>
@@ -54,7 +54,7 @@
             <td>If you connect your iD and Record, we will use this information to help reduce paperwork and reporting burden</td>
         </tr>
       </table>
-      <p class="lead">To do this, State University needs your permission.</p>
+      <p class="lead">To do this, eBlocBroker needs your permission.</p>
       
       <a class="btn btn-large">Let me try again</a>
   </div>
