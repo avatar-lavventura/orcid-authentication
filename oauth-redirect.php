@@ -120,7 +120,7 @@
 	<h1>Thanks, <?php echo $response['name']; ?>!</h1>
 	<br>
 	<p class="lead">Your ORCID <img src="https://orcid.org/sites/default/files/images/orcid_16x16.png" class="logo" width='16' height='16' alt="iD"/> is <a href="<?php echo ENV; ?>/<?php echo $response['orcid']; ?>" target="_blank"><?php echo ENV; ?>/<?php echo $response['orcid']; ?></a></p>
-	<p class="lead">We received your registiration. </p>
+	<p class="lead">We received your registration. </p>
 
 	      <!--
       <p class="lead">The access token we're storing in our database so that we can update your ORCID record in the future is <b><?php echo $response['access_token']; ?></b></p>
