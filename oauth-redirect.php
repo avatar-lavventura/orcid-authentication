@@ -36,9 +36,9 @@
        /////////////////////////////////////////////////////////////////////////////////
        //ORCID API CREDENTIALS - replace these values with your API credentials
 
-       define('OAUTH_CLIENT_ID',     'APP-90R3NMFJNN5M4J84');                                                //client ID
-       define('OAUTH_CLIENT_SECRET', '006bd8b5-4a7f-4a70-9850-6ead2afd8c55');                                //client secret
-       define('OAUTH_REDIRECT_URI',  'http://ebloc.cmpe.boun.edu.tr/orcid-authentication/oauth-redirect.php'); //redirect URI
+       define('OAUTH_CLIENT_ID',     '**********');                                                //client ID
+       define('OAUTH_CLIENT_SECRET', '**********');                                //client secret
+       define('OAUTH_REDIRECT_URI',  '**********'); //redirect URI
 
        //ORCID API ENDPOINTS
        ////////////////////////////////////////////////////////////////////////////////
