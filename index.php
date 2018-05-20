@@ -9,11 +9,6 @@
     <link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
 
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-        <!--[if lt IE 9]>
-      <script src="bootstrap/js/html5shiv.js"></script>
-      <![endif]-->
-
 	<!-- Favicon -->
 	<link rel="icon" type="image/png" href="https://orcid.org/sites/default/files/images/orcid_16x16.png" />
   </head>
