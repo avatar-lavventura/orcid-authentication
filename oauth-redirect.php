@@ -20,6 +20,35 @@
 
   <body>
 
+<<<<<<< HEAD
+<?php
+session_start();
+  
+/////////////////////////////////////////////////////////////////////////////////
+//ORCID API CREDENTIALS - replace these values with your API credentials
+
+define('OAUTH_CLIENT_ID',     'APP-XXXXXXXXXXXXXXXX');          //client ID
+define('OAUTH_CLIENT_SECRET', 'XXXXXXXXXXXXXXXXXXXXXX');        //client secret
+define('OAUTH_REDIRECT_URI',  'https://your-redirect-uri.org'); //redirect URI
+   
+//ORCID API ENDPOINTS
+////////////////////////////////////////////////////////////////////////////////
+   
+//Sandbox - Member API
+//define('OAUTH_AUTHORIZATION_URL', 'https://sandbox.orcid.org/oauth/authorize');//authorization endpoint
+//define('OAUTH_TOKEN_URL', 'https://sandbox.orcid.org/oauth/token'); //token endpoint
+//define('ENV', 'https://sandbox.orcid.org'); //environment
+
+//Sandbox - Public API
+//define('OAUTH_AUTHORIZATION_URL', 'https://sandbox.orcid.org/oauth/authorize');//authorization endpoint
+//define('OAUTH_TOKEN_URL', 'https://sandbox.orcid.org/oauth/token');//token endpoint
+//define('ENV', 'https://sandbox.orcid.org'); //environment
+
+//Production - Member API
+//define('OAUTH_AUTHORIZATION_URL', 'https://orcid.org/oauth/authorize');//authorization endpoint
+//define('OAUTH_TOKEN_URL', 'https://api.orcid.org/oauth/token'); //token endpoint
+//define('ENV', 'https://orcid.org'); //environment
+=======
     <?php
        session_start();
 
@@ -147,6 +176,7 @@
 	</ul>
 	<h3 class="muted">ORCID @ eBlocBroker</h3>
       </div>
+>>>>>>> master
 
       <hr>
 
@@ -156,6 +186,19 @@
 	<p class="lead">Your ORCID <img src="https://orcid.org/sites/default/files/images/orcid_16x16.png" class="logo" width='16' height='16' alt="iD"/> is <a href="<?php echo ENV; ?>/<?php echo $response['orcid']; ?>" target="_blank"><?php echo ENV; ?>/<?php echo $response['orcid']; ?></a></p>
 	<p class="lead">We received your registration. </p>
 
+<<<<<<< HEAD
+$name = ""; // define variables and set to empty values
+$code = "";
+$response = "";
+  
+//If an authorization code exists, fetch the access token
+if (isset($_GET['code'])) {
+	//Build request parameter string
+	$params = "client_id=" . OAUTH_CLIENT_ID . "&client_secret=" . OAUTH_CLIENT_SECRET . "&grant_type=authorization_code&code=" . $_GET['code'] . "&redirect_uri=" . OAUTH_REDIRECT_URI;
+
+	//Initialize cURL session
+	$ch = curl_init();
+=======
 
 
 	<!--
@@ -174,6 +217,7 @@ echo "<h2>Your Input:</h2>";
 echo "<br>";
 ?>
 -->
+>>>>>>> master
 
 
       </div>
@@ -182,14 +226,96 @@ echo "<br>";
       <script src="bootstrap/js/jquery.js"></script>
       <script src="bootstrap/js/bootstrap.min.js"></script>
 
+<<<<<<< HEAD
+	//Transform cURL response from json string to php array
+        $response = json_decode($result, true);
+        $code=$response['orcid'];
+        $_SESSION['code_id'] = $code;
+        $_SESSION['response_id'] = $response;
+        $_SESSION['flag_id']     = 0;
+  
+        if (!empty($code)) {
+           $doo = shell_exec("echo ". $code ." >  /eBloc/fifo");
+           $doo = shell_exec("echo ". $code ." >> /eBloc/orcid.txt");
+       }
+  
+        //$doo = shell_exec("echo ". htmlspecialchars($_GET["code"]) ." >> /eBloc/");
+        // echo '' . htmlspecialchars($_GET["code"]) . '!';         
+        //$doo = shell_exec('/eBloc/dene.sh');
+        //$doo = shell_exec('ls /eBloc/');
+        //echo "<pre>$doo</pre>";
+} else { 
+      echo "Unable to connect to ORCID "; //If an authorization code doesn't exist, throw an error
+}
+
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $code     = $_SESSION['code_id'];
+  $response = $_SESSION['response_id'];
+  $flag = 0;
+  
+  if (empty($_POST["name"])) {
+    $nameErr = "Name is required";
+  } else {
+    $name = test_input($_POST["name"]);
+  }
+  header('Location: nextpage.php');
+  //session_destroy();
+}
+
+function test_input($data) {
+  $data = trim($data);
+  $data = stripslashes($data);
+  $data = htmlspecialchars($data);
+  return $data;
+}
+?>		
+=======
   </body>
 </html>
 
 
+>>>>>>> master
 
 
 
 
+<<<<<<< HEAD
+      <div class="jumbotron">
+      <h1>Thanks, <?php echo $response['name']; ?>!</h1>
+      <br>
+      <p class="lead">Your ORCID <img src="https://orcid.org/sites/default/files/images/orcid_16x16.png" class="logo" width='16' height='16' alt="iD"/> is <a href="<?php echo ENV; ?>/<?php echo $response['orcid']; ?>" target="_blank"><?php echo ENV; ?>/<?php echo $response['orcid']; ?></a></p>
+    <p class="lead">We received your registration. </p>
+
+
+
+<!--
+<p><span class="error">* required field</span></p>
+<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">  
+  Ethereum Address: <input type="text" name="name" value="<?php echo $name;?>">
+  <span class="error">* <?php echo $nameErr;?></span>
+  <br><br>
+  <input type="submit" name="submit" value="Submit">  
+</form>
+
+<?php
+echo "<h2>Your Input:</h2>";
+  echo $name;
+  echo $code;
+echo "<br>";
+?>
+-->
+
+
+      </div>
+
+<hr>
+      <script src="bootstrap/js/jquery.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+
+  </body>
+</html>
+=======
       <!-- ***** NOT_USED *****
       <p class="lead">The access token we're storing in our database so that we can update your ORCID record in the future is <b><?php echo $response['access_token']; ?></b></p>
       <p>(for demo purposes only - don't show access tokens in live apps!)</p>
@@ -197,3 +323,4 @@ echo "<br>";
       <a class="btn btn-large"  href="<?php echo ENV; ?>/my-orcid" target="_blank">Go to your ORCID record</a>
       --->
       
+>>>>>>> master
