@@ -3,6 +3,8 @@
   <head>
     <meta charset="utf-8">
     <title>ORCID Create on Demand Demo</title>
+    <script src="test.js" type="text/javascript"></script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Styles -->
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -16,9 +18,91 @@
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="https://orcid.org/sites/default/files/images/orcid_16x16.png" />
+ <style>
+    html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      background: white;
+    }
+
+    #result {
+      position: relative;
+      margin: auto;
+      left: 0; right: 0;
+      height: 400px;
+      max width: 1200px;
+      width: 95vw;
+      margin-top: 20px;
+      /*border: 1px solid black;*/
+      font-size: 24px;
+      padding: 5px 10px 5px 10px;
+      overflow: auto;
+    }
+
+    #result p {
+       margin: 0 0 10 0;
+       left:20px;
+        position:relative;
+    }
+
+    #btn {
+      position: relative;
+      display: block;
+      margin: auto;
+      left: 0; right: 0;
+      font-size: 20px;
+      font-weight: bold;
+      padding: 10px 20px 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      background: linear-gradient(to bottom,lightblue,white,lightblue);
+      text-shadow: 1px 1px 0px rgba(192,192,192,1);
+    }
+
+    #btn:hover {
+      background: linear-gradient(to bottom,lightblue,white,lightblue);
+      box-shadow: 0px 0px 3px 4px rgba(192,192,192,0.3);
+    }
+
+    #btn:active {
+      background: linear-gradient(to bottom,white,lightblue,white);
+      text-shadow: -1px -1px 0px rgba(192,192,192,1);
+    }
+ </style>
   </head>
 
   <body>
+  <script src="client.js"></script>
+
+    <script>
+
+
+function a() {
+       window.addEventListener('load', function() {
+            var web3 = window.web3;
+            if (typeof web3 !== 'undefined') {
+                web3js = new Web3(web3.currentProvider); // Use Mist/MetaMask's provider
+             } else {
+                alert('No web3 You should consider trying MetaMask!')
+                web3js = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+             }
+      });
+var account = web3.eth.accounts[0];
+//alert(account)
+
+      web3.eth.getAccounts(function(err, accounts) {
+          account = accounts[0]
+          //alert(account)
+          return(account)
+     })
+}
+
+
+</script>
+
+
 
 <?php
 session_start();
@@ -99,14 +183,13 @@ if (isset($_GET['code'])) {
         $_SESSION['code_id'] = $code;
         $_SESSION['response_id'] = $response;
         $_SESSION['flag_id']     = 0;
-  
-        if (!empty($code)) {
-           $doo = shell_exec("echo ". $code ." >  /eBloc/fifo");
-           $doo = shell_exec("echo ". $code ." >> /eBloc/orcid.txt");
-       }
-  
+
+        //if (!empty($code)) {
+        //   $doo = shell_exec("echo ". $code ." >  /eBloc/fifo");
+        //   $doo = shell_exec("echo ". $code ." >> /eBloc/orcid.txt");
+        //}
         //$doo = shell_exec("echo ". htmlspecialchars($_GET["code"]) ." >> /eBloc/");
-        // echo '' . htmlspecialchars($_GET["code"]) . '!';         
+        // echo '' . htmlspecialchars($_GET["code"]) . '!';
         //$doo = shell_exec('/eBloc/dene.sh');
         //$doo = shell_exec('ls /eBloc/');
         //echo "<pre>$doo</pre>";
@@ -134,11 +217,16 @@ function test_input($data) {
   $data = stripslashes($data);
   $data = htmlspecialchars($data);
   return $data;
-}
-?>		
+  }
+
+//echo "<p id='resultJS'> </p>";
+echo "<script type='text/javascript'>".
+        "document.getElementById('resultJS').innerText = a()".
+        "</script>";
+
+?>
 
 <div class="container">
-
       <div class="masthead">
         <ul class="nav nav-pills pull-right">
           <li><a href="index.php">Home</a></li>
@@ -154,9 +242,16 @@ function test_input($data) {
       <h1>Thanks, <?php echo $response['name']; ?>!</h1>
       <br>
       <p class="lead">Your ORCID <img src="https://orcid.org/sites/default/files/images/orcid_16x16.png" class="logo" width='16' height='16' alt="iD"/> is <a href="<?php echo ENV; ?>/<?php echo $response['orcid']; ?>" target="_blank"><?php echo ENV; ?>/<?php echo $response['orcid']; ?></a></p>
+    <!--
     <p class="lead">We received your registration. </p>
+    -->
 
-<!--
+    <button id="btn" title="Come on, click It!"
+    onclick="sendItToServer('<?php echo $response['orcid'];?>')">Click
+    here to register with your Ethereum Address</button>
+    <div id="result"></div>
+
+    <!--
 <p><span class="error">* required field</span></p>
 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">  
   Ethereum Address: <input type="text" name="name" value="<?php echo $name;?>">
