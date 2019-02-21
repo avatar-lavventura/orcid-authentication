@@ -76,33 +76,6 @@
   <body>
   <script src="client.js"></script>
 
-    <script>
-
-
-function a() {
-       window.addEventListener('load', function() {
-            var web3 = window.web3;
-            if (typeof web3 !== 'undefined') {
-                web3js = new Web3(web3.currentProvider); // Use Mist/MetaMask's provider
-             } else {
-                alert('No web3 You should consider trying MetaMask!')
-                web3js = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
-             }
-      });
-var account = web3.eth.accounts[0];
-//alert(account)
-
-      web3.eth.getAccounts(function(err, accounts) {
-          account = accounts[0]
-          //alert(account)
-          return(account)
-     })
-}
-
-
-</script>
-
-
 
 <?php
 session_start();
@@ -116,17 +89,17 @@ else {
   echo 'hello1234';
 }
 */
-  
+
 /////////////////////////////////////////////////////////////////////////////////
 //ORCID API CREDENTIALS - replace these values with your API credentials
 
-define('OAUTH_CLIENT_ID',     '**********');                                                //client ID
-define('OAUTH_CLIENT_SECRET', '**********');                                //client secret
-define('OAUTH_REDIRECT_URI',  '**********'); //redirect URI
+define('OAUTH_CLIENT_ID',     'APP-90R3NMFJNN5M4J84');                                                //client ID
+define('OAUTH_CLIENT_SECRET', 'd329775a-29dc-472a-83e7-cdf5e2119e88');                                //client secret
+define('OAUTH_REDIRECT_URI',  'http://ebloc.cmpe.boun.edu.tr/orcid-authentication/oauth-redirect.php'); //redirect URI
 
 //ORCID API ENDPOINTS
 ////////////////////////////////////////////////////////////////////////////////
-   
+
 //Sandbox - Member API
 //define('OAUTH_AUTHORIZATION_URL', 'https://sandbox.orcid.org/oauth/authorize');//authorization endpoint
 //define('OAUTH_TOKEN_URL', 'https://sandbox.orcid.org/oauth/token'); //token endpoint
@@ -153,7 +126,7 @@ define('ENV', 'https://orcid.org'); //environment
 $name = ""; // define variables and set to empty values
 $code = "";
 $response = "";
-  
+
 //If an authorization code exists, fetch the access token
 if (isset($_GET['code'])) {
 	//Build request parameter string
@@ -169,7 +142,7 @@ if (isset($_GET['code'])) {
 	curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
 	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);//Turn off SSL certificate check for testing - remove this for production version!
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);//Turn off SSL certificate check for testing - remove this for production version!
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
 	//Execute cURL command
 	$result = curl_exec($ch);
@@ -193,7 +166,7 @@ if (isset($_GET['code'])) {
         //$doo = shell_exec('/eBloc/dene.sh');
         //$doo = shell_exec('ls /eBloc/');
         //echo "<pre>$doo</pre>";
-} else { 
+} else {
       echo "Unable to connect to ORCID "; //If an authorization code doesn't exist, throw an error
 }
 
@@ -202,7 +175,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $code     = $_SESSION['code_id'];
   $response = $_SESSION['response_id'];
   $flag = 0;
-  
+
   if (empty($_POST["name"])) {
     $nameErr = "Name is required";
   } else {
@@ -218,12 +191,6 @@ function test_input($data) {
   $data = htmlspecialchars($data);
   return $data;
   }
-
-//echo "<p id='resultJS'> </p>";
-echo "<script type='text/javascript'>".
-        "document.getElementById('resultJS').innerText = a()".
-        "</script>";
-
 ?>
 
 <div class="container">
@@ -252,25 +219,22 @@ echo "<script type='text/javascript'>".
     <div id="result"></div>
 
     <!--
-<p><span class="error">* required field</span></p>
-<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">  
-  Ethereum Address: <input type="text" name="name" value="<?php echo $name;?>">
-  <span class="error">* <?php echo $nameErr;?></span>
-  <br><br>
-  <input type="submit" name="submit" value="Submit">  
-</form>
+	<p><span class="error">* required field</span></p>
+	<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+	  Ethereum Address: <input type="text" name="name" value="<?php echo $name;?>">
+	  <span class="error">* <?php echo $nameErr;?></span>
+	  <br><br>
+	  <input type="submit" name="submit" value="Submit">
+	</form>
 
-<?php
-echo "<h2>Your Input:</h2>";
-  echo $name;
-  echo $code;
-echo "<br>";
-?>
--->
-
-
+	<?php
+	  echo "<h2>Your Input:</h2>";
+	  echo $name;
+	  echo $code;
+	  echo "<br>";
+	  ?>
+	-->
       </div>
-
 <hr>
       <script src="bootstrap/js/jquery.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
