@@ -1,93 +1,226 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title>ORCID Create on Demand Demo</title>
-    <script src="client.js" type="text/javascript"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Styles -->
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
-    <link href="style.css" rel="stylesheet">
-
+    <!--<script src="client.js" type="text/javascript"></script>-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="style.css" rel="stylesheet" />
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="bootstrap/js/html5shiv.js"></script>
     <![endif]-->
-
-    <!-- Favicon -->
     <link rel="icon" type="image/png" href="https://orcid.org/sites/default/files/images/orcid_16x16.png" />
- <style>
-    html {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      width: 100%;
-      background: white;
-    }
+    <style>
+      html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+        background: white;
+      }
 
-    #result {
-      position: relative;
-      margin: auto;
-      left: 0; right: 0;
-      height: 400px;
-      max width: 1200px;
-      width: 95vw;
-      margin-top: 20px;
-      /*border: 1px solid black;*/
-      font-size: 24px;
-      padding: 5px 10px 5px 10px;
-      overflow: auto;
-    }
+      #result {
+        position: relative;
+        margin: auto;
+        left: 0; right: 0;
+        height: 400px;
+        max width: 1200px;
+        width: 92vw;
+        margin-top: 20px;
+        /*border: 1px solid black;*/
+        font-size: 24px;
+        padding: 5px 10px 5px 10px;
+        overflow: auto;
+      }
 
-    #result p {
-       margin: 0 0 10 0;
-       left:20px;
-        position:relative;
-    }
+      #result p {
+         margin: 0 0 10 0;
+         left:20px;
+          position:relative;
+      }
 
-    #btn {
-      position: relative;
-      display: block;
-      margin: auto;
-      left: 0; right: 0;
-      font-size: 20px;
-      font-weight: bold;
-      padding: 10px 20px 10px 20px;
-      border-radius: 4px;
-      cursor: pointer;
-      background: linear-gradient(to bottom,lightblue,white,lightblue);
-      text-shadow: 1px 1px 0px rgba(192,192,192,1);
-    }
+      #btn {
+        position: relative;
+        display: block;
+        margin: auto;
+        left: 0; right: 0;
+        font-size: 20px;
+        font-weight: bold;
+        padding: 10px 20px 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        background: linear-gradient(to bottom,lightblue,white,lightblue);
+        text-shadow: 1px 1px 0px rgba(192,192,192,1);
+      }
 
-    #btn:hover {
-      background: linear-gradient(to bottom,lightblue,white,lightblue);
-      box-shadow: 0px 0px 3px 4px rgba(192,192,192,0.3);
-    }
+      #btn:hover {
+        background: linear-gradient(to bottom,lightblue,white,lightblue);
+        box-shadow: 0px 0px 3px 4px rgba(192,192,192,0.3);
+      }
 
-    #btn:active {
-      background: linear-gradient(to bottom,white,lightblue,white);
-      text-shadow: -1px -1px 0px rgba(192,192,192,1);
-    }
- </style>
+      #btn:active {
+        background: linear-gradient(to bottom,white,lightblue,white);
+        text-shadow: -1px -1px 0px rgba(192,192,192,1);
+      }
+
+      #formAddr {
+        box-shadow: 0px 0px 8px -2px gray;
+        left: 0px; right: 0px;
+        margin: 20px auto;
+        width: 500px;
+        padding: 40px;
+        border-radius: 6px;
+        background: aliceblue;
+      }
+
+      #inputAddr {
+        display: inline-block;
+        vertical-align: middle;
+        font-size: 1em;
+        margin-right: 10px;
+        padding: 6px;
+        min-width: 300px;
+      }
+
+      #btnSub {
+        display: inline-block;
+        vertical-align: middle;
+        font-weight: bold;
+        font-size: 1em;
+        cursor: pointer;
+        padding: 6px;
+      }
+
+    </style>
+    <script>
+      "use strict";
+      window.onload = function() {
+        //returns a simple js object
+        function myFunction(orcid) {
+          //window.addEventListener('load', function() {
+            var errorMessage = "";
+            var web3 = window.web3;
+            var web3js = null;
+            if(typeof web3 !== 'undefined') {
+              web3js = new Web3(web3.currentProvider); // Use Mist/MetaMask's provider
+            } else {
+              errorMessage = "No web3!! You should consider trying MetaMask!";
+              alert('No web3 You should consider trying MetaMask!');
+              web3js = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+            }
+          //});
+
+          var account = web3.eth.accounts[0];
+          var flag = 1;
+
+          if(typeof account == "undefined") {
+            //account = "No web3!! You should consider trying MetaMask!"
+            account = "";
+            flag = 0;
+          }
+
+          if(orcid == "") {
+            flag = 0;
+          }
+
+          var myObject = {account:account, flag:flag, orcid:orcid};
+          return myObject;
+        }
+
+        var btn = document.getElementById("btn");
+        var btnxhr = new XMLHttpRequest();
+
+        btnxhr.onreadystatechange = function() {
+          if(btnxhr.readyState === 4) {
+            if(btnxhr.status === 200) {
+              if(btnxhr.responseText === "BadArgument" || btnxhr.responseText === "SomethingFailed") {
+                console.log("submit failed");
+                return;
+              }
+              else {
+                //parse the server response in order to get a js object
+                var response = JSON.parse(btnxhr.responseText);
+
+                if (response.account == "") {
+                  //show the result in html page
+                  document.getElementById("result").innerHTML = "<p>Please login into your Ethereum Address in MetaMask</p>";
+                }
+                else if (response.orcid == "") {
+                  //show the result in html page
+                  document.getElementById("result").innerHTML = "<p>Please re-connect to your ORCID iD</p>";
+                }
+                else {
+                  //show the result in html page
+                  document.getElementById("result").innerHTML = "<p>Logged in Ethereum Address = " + response.account + "</p>"
+                    + "<p>orcid = " + response.orcid + "</p>"
+                    + "<p>We received your registration.</p>"
+                }
+
+                console.log("After:");
+                console.log(response);
+              }
+            }
+            else {
+              console.log("server fault");
+            }
+          }
+        }
+
+        btn.addEventListener("click", function() {
+          console.log("Before:");
+          console.log(myFunction("<?php echo $response['orcid'];?>"));
+
+          btnxhr.open("POST","server.php", true);
+          btnxhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+          //cast the function return orcid to JSON before sending
+          btnxhr.send("ClientOutput=" + JSON.stringify(myFunction("<?php echo $response['orcid'];?>")));
+        });
+
+        function setupAddressInputListener() {
+          var xhr       = new XMLHttpRequest();
+          var res       = "";
+          var formAddr  = document.getElementById("formAddr");
+          var inputAddr = document.getElementById("inputAddr");
+          var btnSub    = document.getElementById("btnSub");
+          var result    = document.getElementById("result");
+
+          xhr.onreadystatechange = function() {
+            if(xhr.readyState === 4 && xhr.status === 200) {
+              res = xhr.responseText;
+              if(res === "GoodAddress") {
+                result.innerHTML = "Address is good. Proceeding...";
+              }
+              else if(res === "BadAddress") {
+                result.innerHTML = "Address is not good.";
+              }
+              else {
+                result.innerHTML = "Bad response. Check server code.";
+              }
+            }
+          }
+
+          btnSub.addEventListener("click", function() {
+            var input = inputAddr.value.trim();
+            if(input.length > 0) {
+              xhr.open("POST","server.php",true);
+              xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+              xhr.send("ethAddr=" + input);
+            }
+            else
+              window.alert("Please enter an address");
+          });
+        }
+
+        setupAddressInputListener();
+      }
+    </script>
   </head>
-
   <body>
-  <script src="client.js"></script>
-
-
 <?php
 session_start();
-
-/*
-if (!isset($_SESSION['doneID'])) {
-  $_SESSION['doneID'] = 1;
-  echo 'hello987';
-  }
-else {
-  echo 'hello1234';
-}
-*/
 
 /////////////////////////////////////////////////////////////////////////////////
 //ORCID API CREDENTIALS - replace these values with your API credentials
@@ -121,78 +254,49 @@ define('ENV', 'https://orcid.org'); //environment
 //EXCHANGE AUTHORIZATION CODE FOR ACCESS TOKEN
 ////////////////////////////////////////////////////////////////////////
 
-$name = ""; // define variables and set to empty values
-$code = "";
+$name     = ""; // define variables and set to empty values
+$code     = "";
 $response = "";
 
 // If an authorization code exists, fetch the access token
-if (isset($_GET['code'])) {
-    //Build request parameter string
-    $params = "client_id=" . OAUTH_CLIENT_ID . "&client_secret=" . OAUTH_CLIENT_SECRET . "&grant_type=authorization_code&code=" . $_GET['code'] . "&redirect_uri=" . OAUTH_REDIRECT_URI;
+if(isset($_GET['code'])) {
+  //Build request parameter string
+  $params = "client_id=" . OAUTH_CLIENT_ID .
+            "&client_secret=" . OAUTH_CLIENT_SECRET .
+            "&grant_type=authorization_code" .
+            "&code=" . $_GET['code'] .
+            "&redirect_uri=" . OAUTH_REDIRECT_URI;
 
-    //Initialize cURL session
-    $ch = curl_init();
+  //Initialize cURL session
+  $ch = curl_init();
 
-    //Set cURL options
-    curl_setopt($ch, CURLOPT_URL, OAUTH_TOKEN_URL);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Accept: application/json'));
-    curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0); // Turn off SSL certificate check for testing - remove this for production version!
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0); // Turn off SSL certificate check for testing - remove this for production version!
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  //Set cURL options
+  curl_setopt($ch, CURLOPT_URL, OAUTH_TOKEN_URL);
+  curl_setopt($ch, CURLOPT_HTTPHEADER, array('Accept: application/json'));
+  curl_setopt($ch, CURLOPT_POST, true);
+  curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
+  curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0); // Turn off SSL certificate check for testing - remove this for production version!
+  curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0); // Turn off SSL certificate check for testing - remove this for production version!
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-    //Execute cURL command
-    $result = curl_exec($ch);
+  //Execute cURL command
+  $result = curl_exec($ch);
 
-    //Close cURL session
-    curl_close($ch);
+  //Close cURL session
+  curl_close($ch);
 
-    //Transform cURL response from json string to php array
-    $response = json_decode($result, true);
-    $code=$response['orcid'];
-    $_SESSION['code_id'] = $code;
-    $_SESSION['response_id'] = $response;
-    $_SESSION['flag_id']= 0;
-
-    // if (!empty($code)) {
-    //   $doo = shell_exec("echo ". $code ." >  /eBloc/fifo");
-    //   $doo = shell_exec("echo ". $code ." >> /eBloc/orcid.txt");
-    // }
-    // $doo = shell_exec("echo ". htmlspecialchars($_GET["code"]) ." >> /eBloc/");
-    // echo '' . htmlspecialchars($_GET["code"]) . '!';
-    // $doo = shell_exec('/eBloc/dene.sh');
-    // $doo = shell_exec('ls /eBloc/');
-    // echo "<pre>$doo</pre>";
+  //Transform cURL response from json string to php array
+  $response = json_decode($result, true);
+  $code = $response['orcid'];
+  $_SESSION['code_id'] = $code;
+  $_SESSION['response_id'] = $response;
+  $_SESSION['flag_id'] = 0;
 } else {
-    echo "Unable to connect to ORCID "; // If an authorization code doesn't exist, throw an error
+  echo "Unable to connect to ORCID "; // If an authorization code doesn't exist, throw an error
+  //die();
 }
-
-
-// if ($_SERVER["REQUEST_METHOD"] == "POST") {
-//   $code     = $_SESSION['code_id'];
-//   $response = $_SESSION['response_id'];
-//   $flag = 0;
-
-//   if (empty($_POST["name"])) {
-//     $nameErr = "Name is required";
-//   } else {
-//     $name = test_input($_POST["name"]);
-//   }
-//   header('Location: nextpage.php');
-//   //session_destroy();
-// }
-
-// function test_input($data) {
-//   $data = trim($data);
-//   $data = stripslashes($data);
-//   $data = htmlspecialchars($data);
-//   return $data;
-//   }
-
 ?>
-
-<div class="container">
+    <div class="container">
       <div class="masthead">
         <ul class="nav nav-pills pull-right">
           <li><a href="index.php">Home</a></li>
@@ -202,41 +306,27 @@ if (isset($_GET['code'])) {
         <h3 class="muted">ORCID @ eBlocBroker</h3>
       </div>
 
-      <hr>
+      <hr />
 
       <div class="jumbotron">
-      <h1>Thanks, <?php echo $response['name']; ?>!</h1>
-      <br>
-      <p class="lead">Your ORCID <img src="https://orcid.org/sites/default/files/images/orcid_16x16.png" class="logo" width='16' height='16' alt="iD"/> is <a href="<?php echo ENV; ?>/<?php echo $response['orcid']; ?>" target="_blank"><?php echo ENV; ?>/<?php echo $response['orcid']; ?></a></p>
-    <!--
-    <p class="lead">We received your registration. </p>
-    -->
+        <h1>Thanks, <?php echo $response['name']; ?>!</h1>
+        <br />
+        <p class="lead">Your ORCID <img src="https://orcid.org/sites/default/files/images/orcid_16x16.png" class="logo" width='16' height='16' alt="iD"/> is <a href="<?php echo ENV; ?>/<?php echo $response['orcid']; ?>" target="_blank"><?php echo ENV; ?>/<?php echo $response['orcid']; ?></a></p>
+        <!--<p class="lead">We received your registration. </p>-->
 
-    <button id="btn" title="Come on, click It!"
-    onclick="sendItToServer('<?php echo $response['orcid'];?>')">Click
-    here to register with your Ethereum Address</button>
-    <div id="result"></div>
+        <!--<button id="btn" onclick="sendItToServer('<?php echo $response['orcid'];?>')">Click here to register with your Ethereum Address</button>-->
+        <button id="btn">Click here to register with your Ethereum Address</button>
 
-    <!--
-    <p><span class="error">* required field</span></p>
-    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-      Ethereum Address: <input type="text" name="name" value="<?php echo $name;?>">
-      <span class="error">* <?php echo $nameErr;?></span>
-      <br><br>
-      <input type="submit" name="submit" value="Submit">
-    </form>
+        <div id="formAddr">
+          <input id="inputAddr" type="text" placeholder="Ethereum Address" />
+          <button id="btnSub">Submit</button>
+        </div>
 
-    <?php
-      echo "<h2>Your Input:</h2>";
-      echo $name;
-      echo $code;
-      echo "<br>";
-      ?>
-    -->
+        <div id="result"></div>
       </div>
-<hr>
-    <script src="bootstrap/js/jquery.js"></script>
-    <script src="bootstrap/js/bootstrap.min.js"></script>
-
+      <hr />
+      <script src="bootstrap/js/jquery.js"></script>
+      <script src="bootstrap/js/bootstrap.min.js"></script>
+    </div>
   </body>
 </html>

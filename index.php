@@ -8,20 +8,16 @@
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
-
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
-      <script src="bootstrap/js/html5shiv.js"></script>
-    <![endif]-->
-
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="https://orcid.org/sites/default/files/images/orcid_16x16.png" />
+	<script src="bootstrap/js/html5shiv.js"></script>
+	<![endif]-->
+	 <!-- Favicon -->
+	 <link rel="icon" type="image/png" href="https://orcid.org/sites/default/files/images/orcid_16x16.png" />
   </head>
 
   <body>
-
     <div class="container-narrow">
-
       <div class="masthead">
         <ul class="nav nav-pills pull-right">
           <li class="active"><a href="http://eblocbroker.duckdns.org/index.php">Home</a></li>
@@ -47,6 +43,5 @@
     </div>
     <script src="bootstrap/js/jquery.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
-
   </body>
 </html>

@@ -1,4 +1,4 @@
-# ORCID PHP Demo App
+qXCID PHP Demo App
 
 PHP code samples for the following ORCID API use cases:
 
@@ -19,3 +19,5 @@ sign-in workflows in cases where users click "Deny" instead of "Authorize."
 **[html/](html/):** Plain HTML versions of the pages listed above, that can be
 viewed in a browser (not needed in order to run the demo app! Included for
 convenience)
+
+https://orcid.org/developer-tools
