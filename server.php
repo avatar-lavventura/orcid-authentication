@@ -28,9 +28,11 @@ if($_SERVER["REQUEST_METHOD"] === "POST") {
     //if(!empty($_POST) && !empty($_POST["ClientOutput"]))
     //get the object from client
     $server_var = json_decode($_POST["ClientOutput"]);
+    var_dump($server_var);
+    die();
     if (!empty($server_var->account) && intval($server_var->flag) == 1 ) {
-      $output = shell_exec("echo ". $server_var->account ." " . $server_var->account ." > /eBloc/fifo");
-      $output = shell_exec("echo ". $server_var->account ." " . $server_var->orcid ." > /eBloc/orcid.txt");
+      $output = shell_exec("echo ". $server_var->account ." " . $server_var->account ." > /tmp/eboc_fifo.txt");
+      $output = shell_exec("echo ". $server_var->account ." " . $server_var->orcid ." > /tmp/eboc_orcid.txt");
     }
     //send it back to client
     echo json_encode($server_var);

@@ -97,38 +97,45 @@
     </style>
     <script>
       "use strict";
-      window.onload = function() {
-        //returns a simple js object
-        function myFunction(orcid) {
-          //window.addEventListener('load', function() {
-            var errorMessage = "";
-            var web3 = window.web3;
-            var web3js = null;
-            if(typeof web3 !== 'undefined') {
-              web3js = new Web3(web3.currentProvider); // Use Mist/MetaMask's provider
-            } else {
-              errorMessage = "No web3!! You should consider trying MetaMask!";
-              alert('No web3 You should consider trying MetaMask!');
-              web3js = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
-            }
-          //});
-
-          var account = web3.eth.accounts[0];
-          var flag = 1;
-
-          if(typeof account == "undefined") {
-            //account = "No web3!! You should consider trying MetaMask!"
-            account = "";
-            flag = 0;
-          }
-
-          if(orcid == "") {
-            flag = 0;
-          }
-
-          var myObject = {account:account, flag:flag, orcid:orcid};
-          return myObject;
+window.onload = function() {
+    //returns a simple js object
+    async function myFunction(orcid) {
+    var accounts = null;
+    var account = null;
+        // //window.addEventListener('load', function() {
+        if (typeof window.ethereum !== 'undefined') {
+            accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+            account = accounts[0];
+            console.log(account); // calisiyor
+            // alert(account);
         }
+        else {
+            alert('No web3 You should consider try with MetaMask');
+        }
+        var flag = 1;
+        // var errorMessage = "";
+        // var web3 = window.web3;
+        // var web3js = null;
+        // if(typeof web3 !== 'undefined') {
+        //     web3js = new Web3(web3.currentProvider); // Use Mist/MetaMask's provider
+        // } else {
+        //     errorMessage = "No web3!! You should consider trying MetaMask!";
+        //     alert('No web3 You should consider trying MetaMask!');
+        //     web3js = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+        // }
+        // var account = web3.eth.accounts[0];
+        // if(typeof account == "undefined") {
+        //     //account = "No web3!! You should consider trying MetaMask!"
+        //     account = "";
+        //     flag = 0;
+        // }
+
+        if(orcid == "") {
+            flag = 0;
+        }
+        var myObject = {account:account, flag:flag, orcid:orcid};
+        return myObject; //sorunlu
+    }
 
         var btn = document.getElementById("btn");
         var btnxhr = new XMLHttpRequest();
@@ -159,8 +166,8 @@
                     + "<p>We received your registration.</p>"
                 }
 
-                console.log("After:");
-                console.log(response);
+                //console.log("After:");
+                //console.log(response);
               }
             }
             else {
@@ -170,13 +177,13 @@
         }
 
         btn.addEventListener("click", function() {
-          console.log("Before:");
-          console.log(myFunction("<?php echo $response['orcid'];?>"));
+          //console.log("Before:");
+          //console.log(myFunction("<?php echo $response['orcid'];?>"));
 
           btnxhr.open("POST","server.php", true);
           btnxhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
           //cast the function return orcid to JSON before sending
-          btnxhr.send("ClientOutput=" + JSON.stringify(myFunction("<?php echo $response['orcid'];?>")));
+          btnxhr.send("ClientOutput=" + JSON.stringify(myFunction("<?php echo $response['orcid'];?>"))); // cok cirkin
         });
 
         function setupAddressInputListener() {
