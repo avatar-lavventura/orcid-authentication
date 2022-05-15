@@ -6,36 +6,39 @@ function test_input($data) {
   return $data;
 }
 
-if($_SERVER["REQUEST_METHOD"] === "POST") {
-  if(!empty($_POST["ethAddr"])) {
-    $code     = $_SESSION['code_id'];
-    $response = $_SESSION['response_id'];
-    $flag     = 0;
-    $address  = "";
+class AccountPack {
+  public $account;
+  public $orcid;
+  public $flag;
 
-    if(empty($_POST["ethAddr"])) {
-      die("BadAddress");
-    }
-    else {
-      $address = test_input($_POST["ethAddr"]);
-      die("GoodAddress");
-    }
-
-    //header('Location: nextpage.php');
-    //session_destroy();
+  function __construct($accIn,$orcIn,$flagIn) {
+    $this->account = $accIn;
+    $this->orcid   = $orcIn;
+    $this->flag    = $flagIn;
+    $this->result  = "";
   }
-  else if(!empty($_POST["ClientOutput"])) {
-    //if(!empty($_POST) && !empty($_POST["ClientOutput"]))
+}
+
+if($_SERVER["REQUEST_METHOD"] === "POST" && !empty($_POST)) {
+  //if(!empty($_POST["acc"]) && !empty($_POST["orcid"]) && !empty($_POST["flag"])) {
+  if(!empty($_POST["acc"]) && !empty($_POST["orcid"])) {
     //get the object from client
-    $server_var = json_decode($_POST["ClientOutput"]);
-    var_dump($server_var);
-    die();
-    if (!empty($server_var->account) && intval($server_var->flag) == 1 ) {
-      $output = shell_exec("echo ". $server_var->account ." " . $server_var->account ." > /tmp/eboc_fifo.txt");
-      $output = shell_exec("echo ". $server_var->account ." " . $server_var->orcid ." > /tmp/eboc_orcid.txt");
-    }
+    $pack = new AccountPack($_POST["acc"],$_POST["orcid"], 1);
+    //$output = shell_exec("echo ". $_POST["acc"] ." " . $_POST["acc"] ." > /eBloc/fifo");
+    //$output = shell_exec("echo ". $_POST["acc"] ." " . $_POST["orcid"] ." > /eBloc/orcid.txt");
+
+    //die("echo ". "\"" . $_POST["acc"] . " " . $_POST["acc"] ."\" > /tmp/ebloc_fifo.txt");
+
+    //Z: BUNLAR CALISIYOR
+    //$output = exec("echo ". "\"" . $_POST["acc"] . " " . $_POST["acc"] ."\" > ebloc_fifo.txt");
+    //$output = exec("echo ". "\"" . $_POST["acc"] . " " . $_POST["orcid"] ."\" > ebloc_orcid.txt");
+    $output = exec("./alper.py");
+    $pack->result = $output;
+
+    //$output = exec("echo ". "\"" . $_POST["acc"] ." \"" . $_POST["acc"] ."\" > /tmp/ebloc_fifo.txt");
+    //$output = exec("echo ". "\"" . $_POST["acc"] ." \"" . $_POST["orcid"] ."\" > /tmp/ebloc_orcid.txt");
     //send it back to client
-    echo json_encode($server_var);
+    echo json_encode($pack);
   }
 }
 ?>
