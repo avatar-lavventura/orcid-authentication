@@ -1,0 +1,25 @@
+* NOTES
+
+#+begin_src bash
+sudo chown alper:www-data -R /var/www-data
+sudo chown -R alper:www-data /tmp/ebloc_orcid.txt
+#+end_src
+
+#+begin_src php
+if (!empty($code)) {
+   $doo = shell_exec("echo ". $code ." >  /eBloc/fifo");
+   $doo = shell_exec("echo ". $code ." >> /eBloc/orcid.txt");
+}
+$doo = shell_exec("echo ". htmlspecialchars($_GET["code"]) ." >> /tmp/ebloc_file");
+echo '' . htmlspecialchars($_GET["code"]) . '!';
+$doo = shell_exec('/eBloc/dene.sh');
+$doo = shell_exec('ls /eBloc/');
+echo "<pre>$doo</pre>";
+
+// Zeo: important configuration files:
+/ etc/apache2/apache2.conf
+/etc/php/7.4/apache2/php.ini
+#+end_src
+
+- [[https://docs.metamask.io/guide/accessing-accounts.html#accessing-accounts]]
+[[- https://orcid.org/developer-tools]]
