@@ -1,0 +1,15 @@
+* NOTES
+
+#+begin_src bash
+sudo chown alper:www-data -R /var/www-data
+sudo chown -R alper:www-data /tmp/ebloc_orcid.txt
+#+end_src
+
+** important configuration files:
+- [[/etc/apache2/apache2.conf]]
+_ [[/etc/php/7.4/apache2/php.ini]]
+
+** helpful links
+
+__ [[https://docs.metamask.io/guide/accessing-accounts.html#accessing-accounts]]
+__ [[https://orcid.org/developer-tools]]
