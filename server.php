@@ -20,13 +20,12 @@ class AccountPack {
 }
 
 if($_SERVER["REQUEST_METHOD"] === "POST" && !empty($_POST)) {
-  //if(!empty($_POST["acc"]) && !empty($_POST["orcid"]) && !empty($_POST["flag"])) {
+  // if(!empty($_POST["acc"]) && !empty($_POST["orcid"]) && !empty($_POST["flag"])) {
   if(!empty($_POST["acc"]) && !empty($_POST["orcid"])) {
     //get the object from client
     $pack = new AccountPack($_POST["acc"],$_POST["orcid"], 1);
     //$output = shell_exec("echo ". $_POST["acc"] ." " . $_POST["acc"] ." > /eBloc/fifo");
     //$output = shell_exec("echo ". $_POST["acc"] ." " . $_POST["orcid"] ." > /eBloc/orcid.txt");
-
     //die("echo ". "\"" . $_POST["acc"] . " " . $_POST["acc"] ."\" > /tmp/ebloc_fifo.txt");
 
     //Z: BUNLAR CALISIYOR
