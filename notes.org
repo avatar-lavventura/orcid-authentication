@@ -1,15 +1,32 @@
 * NOTES
 
 #+begin_src bash
-sudo chown alper:www-data -R /var/www-data
-sudo chown -R alper:www-data /tmp/ebloc_orcid.txt
+sudo apt install php libapache2-mod-php
+sudo apt-get install php7.4-curl
+sudo systemctl restart apache2
+
+sudo chown alper:www-data -R /var/www/html
 #+end_src
 
-** important configuration files:
-- [[/etc/apache2/apache2.conf]]
-_ [[/etc/php/7.4/apache2/php.ini]]
+#+begin_src php
+if (!empty($code)) {
+   $doo = shell_exec("echo ". $code ." >  /eBloc/fifo");
+   $doo = shell_exec("echo ". $code ." >> /eBloc/orcid.txt");
+}
+$doo = shell_exec("echo ". htmlspecialchars($_GET["code"]) ." >> /tmp/ebloc_file");
+echo '' . htmlspecialchars($_GET["code"]) . '!';
+$doo = shell_exec('/eBloc/dene.sh');
+$doo = shell_exec('ls /eBloc/');
+echo "<pre>$doo</pre>";
+#+end_src
 
-** helpful links
+** Important configuration files
+
+- [[/etc/apache2/apache2.conf]]
+- [[/etc/php/7.4/apache2/php.ini]]
+
+
+** Links
 
 __ [[https://docs.metamask.io/guide/accessing-accounts.html#accessing-accounts]]
 __ [[https://orcid.org/developer-tools]]
