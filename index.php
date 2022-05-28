@@ -12,9 +12,10 @@
     <!--[if lt IE 9]>
     <script src="bootstrap/js/html5shiv.js"></script>
     <![endif]-->
-     <!-- Favicon -->
-     <link rel="icon" type="image/png" href="https://orcid.org/sites/default/files/images/orcid_16x16.png" />
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://orcid.org/sites/default/files/images/orcid_16x16.png" />
   </head>
+
   <body>
     <div class="container-narrow">
       <div class="masthead">

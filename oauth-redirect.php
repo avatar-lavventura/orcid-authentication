@@ -67,8 +67,8 @@ if(isset($_GET['code'])) {
   //Transform cURL response from json string to php array
   $response = json_decode($result, true);
   $code = $response['orcid'];
-  if(empty($code))
-   header("Location: index.php");
+  //if(empty($code))
+   //header("Location: index.php");
   $_SESSION['code_id'] = $code;
   $_SESSION['response_id'] = $response;
   $_SESSION['flag_id'] = 0;
@@ -103,6 +103,8 @@ if(isset($_GET['code'])) {
       }
 
       #result {
+        font-family: Helvetica,sans-serif;
+        font-size: 1.2em;
         position: relative;
         margin: auto;
         left: 0; right: 0;
@@ -117,9 +119,9 @@ if(isset($_GET['code'])) {
       }
 
       #result p {
-         margin: 0 0 10 0;
-         left:20px;
-          position:relative;
+        margin: 0 0 10 0;
+        /*left:20px;*/
+        position:relative;
       }
 
       #btn {
@@ -145,15 +147,78 @@ if(isset($_GET['code'])) {
         background: linear-gradient(to bottom,white,lightblue,white);
         text-shadow: -1px -1px 0px rgba(192,192,192,1);
       }
+
+      #btn:disabled {
+        cursor: auto;
+      }
+
+      #btn:disabled:hover, #btn:disabled:active {
+        background: linear-gradient(to bottom,lightblue,white,lightblue);
+        text-shadow: 1px 1px 0px rgba(192,192,192,1);
+        box-shadow: unset;
+      }
+
+      .spinr {
+        position: fixed;
+        left: 0; right: 0;
+        top: 0; bottom: 0;
+        margin: auto;
+        width: 200px;
+        height: 200px;
+        z-index: 100;
+      }
+
+      .spinr:after {
+        content: " ";
+        display: block;
+        width: 180px;
+        height: 180px;
+        border-radius: 20%;
+        margin: 0px auto 0px auto;
+        position: relative;
+        background: transparent;
+        border-top: 10px solid black;
+        border-bottom: 10px solid black;
+        animation: anim_spin 1.5s ease-in-out infinite;
+      }
+
+      @keyframes anim_spin {
+        0%   {transform: rotate(0deg);}
+        100% {transform: rotate(360deg);}
+      }
+
+      .spinBlur {
+        filter: blur(3px);
+        overflow: hidden;
+      }
+
     </style>
     <script>
       "use strict";
       window.onload = function() {
-        function AddressPack(accountIn,orcidIn,flagIn) {
-          this.account = accountIn;
-          this.orcid   = orcidIn;
-          this.flag    = flagIn;
+        function Spinner(parentIn,toBlurIn) {
+          var thisRef = this;
+          this.parentElm = parentIn;
+          this.toBlur    = toBlurIn;
+          this.wrapper   = document.createElement("div");
+          this.wrapper.classList.add("spinr");
+
+          this.show = function() {
+            this.parentElm.appendChild(this.wrapper);
+            this.toBlur.classList.add("spinBlur");
+          }
+
+          this.hide = function() {
+            this.parentElm.removeChild(this.wrapper);
+            this.toBlur.classList.remove("spinBlur");
+          }
         }
+
+        var xhr    = new XMLHttpRequest();
+        var btn    = document.getElementById("btn");
+        var divRes = document.getElementById("result");
+        var cont   = document.getElementsByClassName("container")[0];
+        var spinr  = new Spinner(document.body,cont);
 
         async function myFunction(orcid) {
           var accounts = null;
@@ -161,36 +226,27 @@ if(isset($_GET['code'])) {
           if (typeof window.ethereum !== 'undefined') {
             accounts = await ethereum.request({ method: 'eth_requestAccounts' });
             account = accounts[0];
-            console.log(orcid);   //calisiyor
-            console.log(account); // calisiyor
+            console.log(orcid);
+            console.log(account);
           }
           else {
             alert('No web3 You should consider try with MetaMask');
           }
 
-          //var account = web3.eth.accounts[0];
           var flag = 1;
-
-          //if(typeof account == "undefined") {
-            //account = "";
-            //flag = 0;
-          //}
 
           if(orcid == "") {
             flag = 0;
           }
-          // var mypack = AddressPack(account,orcid,flag);
-          // return mypack;
-          return account;
-          //return new AddressPack(account,orcid,flag);
-        }
 
-        var btn = document.getElementById("btn");
-        var xhr = new XMLHttpRequest();
+          return account;
+        }
 
         xhr.onreadystatechange = function() {
           if(xhr.readyState === 4) {
             if(xhr.status === 200) {
+              btn.removeAttribute("disabled");
+              spinr.hide();
               if(xhr.responseText === "BadArgument" || xhr.responseText === "SomethingFailed") {
                 console.log("submit failed");
                 return;
@@ -207,14 +263,13 @@ if(isset($_GET['code'])) {
                   //show the result in html page
                   document.getElementById("result").innerHTML = "<p>Please re-connect to your ORCID iD</p>";
                 }
-                else {
-                  //show the result in html page
+                else {  //show the result in html page
                   document.getElementById("result").innerHTML = "<p>Logged in Ethereum Address = " + response.account + "</p>"
-                    + "<p>orcid = " + response.orcid + "</p>"
-                    + "<p>We received your registration.</p>"
-                    + "<p>Result is = " + response.result + "</p>";
+                    // + "<p>orcid = " + response.orcid + "</p>"
+                    // + "<p>We received your registration.</p>"
+                    + "<p><br></p>"
+                    + "<p>" + response.result + "</p>";
                 }
-
                 console.log("After:");
                 console.log(response);
               }
@@ -228,13 +283,13 @@ if(isset($_GET['code'])) {
         btn.addEventListener("click", function() {
           xhr.open("POST","server.php", true);
           xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-          //var pack = new AddressPack("testAddress","testid",1);
-          //let pack = await myFunction("<?php echo $response['orcid'];?>");
           let orcid = "<?php echo $response['orcid'];?>";
           let address = myFunction("<?php echo $response['orcid'];?>").then(function(addr) {
             xhr.send("acc=" + addr + "&orcid=" + orcid);
+            //xhr.send("acc=1234-5678-9012-3456&orcid=AqbaUZ83BnW0PawYOA");
           });
-          //xhr.send("acc=" + pack.account + "&orcid=" + pack.orcid + "&flag=" + pack.flag);
+          btn.setAttribute("disabled","disabled");
+          spinr.show();
         });
       }
     </script>
