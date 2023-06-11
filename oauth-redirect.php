@@ -5,7 +5,7 @@ session_start();
 //ORCID API CREDENTIALS - replace these values with your API credentials
 define('OAUTH_CLIENT_ID', 'APP-90R3NMFJNN5M4J84'); //client ID
 define('OAUTH_CLIENT_SECRET', 'd329775a-29dc-472a-83e7-cdf5e2119e88'); //client secret
-define('OAUTH_REDIRECT_URI', 'http://eblocbroker.duckdns.org/oauth-redirect.php'); //redirect URI
+define('OAUTH_REDIRECT_URI', 'https://ebloc-broker-authenticate.duckdns.org/oauth-redirect.php'); //redirect URI
 
 //ORCID API ENDPOINTS
 ////////////////////////////////////////////////////////////////////////////////
@@ -254,7 +254,6 @@ if(isset($_GET['code'])) {
               else {
                 //parse the server response in order to get a js object
                 var response = JSON.parse(xhr.responseText);
-
                 if (response.account == "") {
                   //show the result in html page
                   document.getElementById("result").innerHTML = "<p>Please login into your Ethereum Address in MetaMask</p>";

@@ -20,7 +20,7 @@
     <div class="container-narrow">
       <div class="masthead">
         <ul class="nav nav-pills pull-right">
-          <li class="active"><a href="http://eblocbroker.duckdns.org/index.php">Home</a></li>
+          <li class="active"><a href="https://ebloc-broker-authenticate.duckdns.org/index.php">Home</a></li>
           <li><a href="https://orcid.org" target="_blank">About ORCID</a></li>
           <li><a href="https://orcid.org/help/contact-us" target="_blank">Contact ORCID</a></li>
         </ul>
@@ -34,10 +34,10 @@
         <br>
         <p class="lead">Click the button below to create an ORCID iD and connect it to eBlocBroker smart contract.</p>
         <!--replace client_id and redirect_uri with your own values-->
-        <a class="btn btn-large" href="https://orcid.org/oauth/authorize?client_id=APP-90R3NMFJNN5M4J84&response_type=code&scope=/authenticate&show_login=false&redirect_uri=http://eblocbroker.duckdns.org/oauth-redirect.php"><img id="orcid-id-logo" src="https://orcid.org/sites/default/files/images/orcid_24x24.png" width='24' height='24' alt="ORCID logo"/> Create a new ORCID iD</a>
+        <a class="btn btn-large" href="https://orcid.org/oauth/authorize?client_id=APP-90R3NMFJNN5M4J84&response_type=code&scope=/authenticate&show_login=false&redirect_uri=https://ebloc-broker-authenticate.duckdns.org/oauth-redirect.php"><img id="orcid-id-logo" src="https://orcid.org/sites/default/files/images/orcid_24x24.png" width='24' height='24' alt="ORCID logo"/> Create a new ORCID iD</a>
         <br> <br>
         <!--replace client_id and redirect_uri with your own values-->
-        <p class="lead">Already have an ORCID iD? <a href="https://orcid.org/oauth/authorize?client_id=APP-90R3NMFJNN5M4J84&response_type=code&scope=/authenticate&redirect_uri=http://eblocbroker.duckdns.org/oauth-redirect.php&show_login=true">Connect your existing ORCID iD</a>
+        <p class="lead">Already have an ORCID iD? <a href="https://orcid.org/oauth/authorize?client_id=APP-90R3NMFJNN5M4J84&response_type=code&scope=/authenticate&redirect_uri=https://ebloc-broker-authenticate.duckdns.org/oauth-redirect.php&show_login=true">Connect your existing ORCID iD</a>
       </div>
       <hr>
     </div>
